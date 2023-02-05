@@ -18,7 +18,7 @@ class FleetAlertNoNewUpdateService
   private
 
   def notify_user
-    telegram_bot.call('There is no update for the last 2 minutes')
+    telegram_bot.call('There is no update for the last 10 seconds')
   end
 
   def redis
@@ -28,7 +28,7 @@ class FleetAlertNoNewUpdateService
   def no_new_update_after_2_minutes
     return true if last_call_timestamp.zero?
 
-    time_since_last_update > 2.minutes
+    time_since_last_update > 10.seconds
   end
 
   def time_since_last_update
