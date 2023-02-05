@@ -18,19 +18,20 @@ class FleetRequestUpdateService
   private
 
   def notify_user
-    telegram_bot.call(
-      completion_percentage: completion_percentage,
-      time_since_last_update_in_seconds: time_since_last_update.to_i,
-      google_map_link: google_map_link
-    )
+    text = <<~TEXT.strip
+      Completion percentage: #{completion_percentage}
+      Time since last update in seconds: #{time_since_last_update.to_i}
+      Google map link: #{google_map_link}
+    TEXT
+    telegram_bot.call(text)
   end
 
   def notify_user_with_no_data
-    telegram_bot.call
+    telegram_bot.call('No data')
   end
 
   def redis
-    @redis = Redis.new
+    @redis ||= Redis.new
   end
 
   def time_since_last_update

@@ -14,7 +14,7 @@ class Fleet < Grape::API
       FleetUpdateDataService.call declared(params)
     end
 
-    post '/request_update' do
+    get '/request_update' do
       FleetRequestUpdateService.call
     end
   end
